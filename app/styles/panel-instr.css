@@ -1,0 +1,61 @@
+	.pan_instr, .sub-menu {
+		padding:0;
+		margin:0;
+		list-style:none;
+	}
+	.sub-menu {
+		display: none;
+	}
+	.pan_instr a {
+		display:block;
+		padding:2px 2px 2px 3px;
+		background-color: rgba(138, 176, 204, 0.6); /* Old browsers */
+		width:29px;
+		margin:0px;
+		opacity: 0.95;
+		transition: all .3s ease-in-out;
+	}
+	.pan_instr img {
+		padding: 1px;
+		height: 20px;
+		width: 20px;
+	}
+	
+	.pan_instr a:hover {
+		background-color: #E7E7E7;
+		transform: scale(1.15);
+	}
+	
+	.pan_instr a:hover ~ .sub-menu,
+	.sub-menu:hover
+	 {
+		display:block;
+	}
+	.active {
+		background-color: #52b6ec !important;
+	}
+	.pan_instr li:hover .change-rad {
+		-moz-border-radius: 0 10px 0 0; /* закругление для старых Mozilla Firefox */
+        -webkit-border-radius: 0 10px 0 0; /* закругл. для старых Chrome и Safari */
+        -khtml-border-radius: 0 10px 0 0; /* закругл.для брауз.Konquerer сист. Linux */
+         border-radius: 0 10px 0 0; /* закругление углов для всех, кто понимает */
+	}
+	
+	.pan_instr_z_v {
+		-moz-border-radius: 0 10px 0 0; /* закругление для старых Mozilla Firefox */
+        -webkit-border-radius: 0 10px 0 0; /* закругл. для старых Chrome и Safari */
+        -khtml-border-radius: 0 10px 0 0; /* закругл.для брауз.Konquerer сист. Linux */
+         border-radius: 0 10px 0 0; /* закругление углов для всех, кто понимает */
+	}
+	.pan_instr_z_n {
+		-moz-border-radius: 0 0 10px 0; /* закругление для старых Mozilla Firefox */
+        -webkit-border-radius: 0 0 10px 0; /* закругл. для старых Chrome и Safari */
+        -khtml-border-radius: 0 0 10px 0; /* закругл.для брауз.Konquerer сист. Linux */
+         border-radius: 0 0 10px 0; /* закругление углов для всех, кто понимает */
+	}
+	.pan_instr_z_nv {
+		-moz-border-radius: 0 10px 10px 0; /* закругление для старых Mozilla Firefox */
+        -webkit-border-radius: 0 10px 10px 0; /* закругл. для старых Chrome и Safari */
+        -khtml-border-radius: 0 10px 10px 0; /* закругл.для брауз.Konquerer сист. Linux */
+         border-radius: 0 10px 10px 0; /* закругление углов для всех, кто понимает */
+	}

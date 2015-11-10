@@ -1,0 +1,52 @@
+<div id="panel" class="o1"></div>
+			<ul class = "pan_instr">
+			<br> <br> <br>
+				
+					<li><a href="#layer" class = "pan_instr_z_nv" ng-class="getClass('layer')">
+						<img title="CHANGE LAYER" src="images/menu/layer.png">
+					</a></li>
+					<br>
+					<li><a ng-href="#" class = "pan_instr_z_v">
+						<img title="ZOOM +" src="images/menu/zoomp.png">
+					</a></li>
+					<li><a ng-href="#">
+						<img title="ZOOM -" src="images/menu/zoomm.png">
+					</a></li>
+					<li><a href="#navig" class="pan_instr_z_n" ng-class="getClass('navig')">
+						<img src="images/menu/heand.png">
+					</a></li>
+					<br>
+					<li><a href="#drawpoint" class="pan_instr_z_v" ng-class="getClass('drawpoint')" >
+						<img title="" src="images/menu/point.png">
+					</a></li>
+					<li><a href="#drawline" class="pan_instr_z_n" ng-class="getClass('drawline')">
+						<img title="" src="images/menu/line.png">
+					</a></li>
+					<br>
+					
+					<li><a style="cursor:pointer;" class="pan_instr_z_nv change-rad" ng-class="getClass('sub')">
+						<img title = "" src="{{getItem()}}">
+					</a>
+							<ul class = "sub-menu">
+								<li><a href="#drag">
+									<img title="" src="images/menu/drag.png">
+								</a></li>
+								<li><a href="#rotater">
+									<img title="" src="images/menu/rotate.png">
+								</a></li>
+								<li><a href="#attrib">
+									<img title="" src="images/menu/infr.png">
+								</a></li>
+								<li><a href="#deleter" class="pan_instr_z_n">
+									<img title="" src="images/menu/delete.png">
+								</a></li>
+							</ul>
+					</li>
+					<br>
+					<li><a href="#inform" class = "pan_instr_z_v" ng-class="getClass('inform')">
+						<img title="" src="images/menu/inform.png">
+					</a></li>
+					<li><a href="#messure" class="pan_instr_z_n" ng-class="getClass('messure')">
+						<img title="" src="images/menu/mesur.png">
+					</a></li>
+			</ul>	
