@@ -16,6 +16,7 @@
 			}
 			
 			$scope.getClass = function(name) {
+				console.log("asfsa");
 				var state = routpar.getState();
 				if (name == state) {
 					return 'active';

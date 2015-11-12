@@ -3,9 +3,14 @@
 		margin:0;
 		list-style:none;
 	}
-	.sub-menu {
-		display: none;
+	
+	.pan_instr .sub-menu {
+		height:0;
+		visibility:hidden;
+		opacity:0;
+		transition: all 0.3s ease-in-out;
 	}
+	
 	.pan_instr a {
 		display:block;
 		padding:2px 2px 2px 3px;
@@ -13,7 +18,7 @@
 		width:29px;
 		margin:0px;
 		opacity: 0.95;
-		transition: all .3s ease-in-out;
+		transition: all .05s ease-in-out;
 	}
 	.pan_instr img {
 		padding: 1px;
@@ -29,8 +34,11 @@
 	.pan_instr a:hover ~ .sub-menu,
 	.sub-menu:hover
 	 {
-		display:block;
+		height:100px;
+		visibility:visible;
+		opacity:0.95;
 	}
+	
 	.active {
 		background-color: #52b6ec !important;
 	}
