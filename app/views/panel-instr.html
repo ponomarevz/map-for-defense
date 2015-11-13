@@ -2,51 +2,51 @@
 			<ul class = "pan_instr">
 			<br> <br> <br>
 				
-					<li><a href="#layer" class = "pan_instr_z_nv" ng-class="getClass('layer')">
+					<li><a ui-sref="layer" ui-sref-active="active" class = "pan_instr_z_nv">
 						<img title="CHANGE LAYER" src="images/menu/layer.png">
 					</a></li>
 					<br>
-					<li><a ng-href="#" class = "pan_instr_z_v">
+					<li><a ui-sref="zp" class = "pan_instr_z_v">
 						<img title="ZOOM +" src="images/menu/zoomp.png">
 					</a></li>
-					<li><a ng-href="#">
+					<li><a ui-sref="zm">
 						<img title="ZOOM -" src="images/menu/zoomm.png">
 					</a></li>
-					<li><a href="#navig" class="pan_instr_z_n" ng-class="getClass('navig')">
+					<li><a ui-sref="navig" ui-sref-active="active"  class="pan_instr_z_n">
 						<img src="images/menu/heand.png">
 					</a></li>
 					<br>
-					<li><a href="#drawpoint" class="pan_instr_z_v" ng-class="getClass('drawpoint')" >
+					<li><a ui-sref="drawpoint" ui-sref-active="active" class="pan_instr_z_v">
 						<img title="" src="images/menu/point.png">
 					</a></li>
-					<li><a href="#drawline" class="pan_instr_z_n" ng-class="getClass('drawline')">
+					<li><a ui-sref="drawline" ui-sref-active="active" class="pan_instr_z_n">
 						<img title="" src="images/menu/line.png">
 					</a></li>
 					<br>
 					
-					<li><a style="cursor:pointer;" class="pan_instr_z_nv change-rad" ng-class="getClass('sub')">
+					<li><a style="cursor:pointer;" class="pan_instr_z_nv change-rad" ui-sref-active="active">
 						<img title = "" src="{{getItem()}}">
 					</a>
 							<ul class = "sub-menu">
-								<li><a href="#drag">
+								<li><a ui-sref="drag">
 									<img title="" src="images/menu/drag.png">
 								</a></li>
-								<li><a href="#rotater">
+								<li><a ui-sref="rotatter">
 									<img title="" src="images/menu/rotate.png">
 								</a></li>
-								<li><a href="#attrib">
+								<li><a ui-sref="attrib">
 									<img title="" src="images/menu/infr.png">
 								</a></li>
-								<li><a href="#deleter" class="pan_instr_z_n">
+								<li><a ui-sref="deleter" class="pan_instr_z_n">
 									<img title="" src="images/menu/delete.png">
 								</a></li>
 							</ul>
 					</li>
 					<br>
-					<li><a href="#inform" class = "pan_instr_z_v" ng-class="getClass('inform')">
+					<li><a ui-sref="inform" ui-sref-active="active" class = "pan_instr_z_v">
 						<img title="" src="images/menu/inform.png">
 					</a></li>
-					<li><a href="#messure" class="pan_instr_z_n" ng-class="getClass('messure')">
+					<li><a ui-sref="messure" ui-sref-active="active" class="pan_instr_z_n">
 						<img title="" src="images/menu/mesur.png">
 					</a></li>
 			</ul>	
