@@ -24,8 +24,8 @@
 					</a></li>
 					<br>
 					
-					<li><a style="cursor:pointer;" class="pan_instr_z_nv change-rad" ui-sref-active="active">
-						<img title = "" src="{{getItem()}}">
+					<li><a style="cursor:pointer;" class="pan_instr_z_nv change-rad" ng-class="{'active': getItem().class}">
+						<img title = "" src="{{getItem().img}}">
 					</a>
 							<ul class = "sub-menu">
 								<li><a ui-sref="drag">

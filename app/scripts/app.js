@@ -1,20 +1,34 @@
 
-
-
-
-	angular.module('App', ['ui.router']).
-		config(function($stateProvider, $urlRouterProvider) {
-		$stateProvider
+	angular.module('App', ['ui.router']);
+	
+	angular.module('App').
+		config(function($stateProvider, $urlRouterProvider, $olMapProvider) {
 			
+			
+			
+			
+		$stateProvider
 			.state('layer', {
 				url:'/layer',
-				resolve: { title: {t: 'My Contacts'} },
-				onEnter: function(title){
-					alert(title.t);
-					//olS.maximizeControl();
+				//resolve: { title: 'My Contacts' },
+				onEnter: function(){
+					
+					
+					$olMapProvider.olS.maximizeControl();
 					
 				}
 				
+			})
+			.state('navigate', {
+				url:'/navigate/:layer/:zoom/:lon/:lat',
+				onEnter: function($stateParams){
+					var layer = $stateParams.layer;
+					layer = decodeURI(layer.replace(/\./g, "%"));
+					$olMapProvider.map.moveTo( new OpenLayers.LonLat($stateParams.lon, $stateParams.lat), $stateParams.zoom);
+					var l = $olMapProvider.map.getLayersByName(layer)[0];
+					$olMapProvider.map.setBaseLayer(l);
+					
+				}
 			})
 			.state('zp', {
 				url:'/zp',
@@ -93,5 +107,6 @@
 		
 
 	});
+	
 
 		

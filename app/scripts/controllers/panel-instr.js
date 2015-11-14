@@ -11,7 +11,11 @@
 								'deleter':'images/menu/delete.png'};
 			
 			$scope.getItem = function() {
-				return imgList[$stateParams.state] || img;
+				var it = imgList[$stateParams.state];
+				return {
+					img:it || img,
+					class:false || it
+				};
 			}
 								
 		});
