@@ -8,17 +8,6 @@
 			
 			
 		$stateProvider
-			.state('layer', {
-				url:'/layer',
-				//resolve: { title: 'My Contacts' },
-				onEnter: function(){
-					
-					
-					$olMapProvider.olS.maximizeControl();
-					
-				}
-				
-			})
 			.state('navigate', {
 				url:'/navigate/:layer/:zoom/:lon/:lat',
 				onEnter: function($stateParams){
@@ -27,75 +16,87 @@
 					$olMapProvider.map.moveTo( new OpenLayers.LonLat($stateParams.lon, $stateParams.lat), $stateParams.zoom);
 					var l = $olMapProvider.map.getLayersByName(layer)[0];
 					$olMapProvider.map.setBaseLayer(l);
-					
 				}
 			})
-			.state('zp', {
+			.state('navigate.layer', {
+				url:'/layer',
+				views: {
+					'ls@' : {
+						templateUrl:'views/layerswitcher.html',
+						controller:'layerswitcher'
+					},
+				},
+				onEnter: function($stateParams){
+					$stateParams.state="layer";
+				}
+			})
+			.state('navigate.navig', {
+				url:'/navig',
+				onEnter: function($stateParams){
+					$stateParams.state="navig";
+				}
+			})
+			.state('navigate.zp', {
 				url:'/zp',
 				onEnter: function(){
 					
 				}
 				
 			})
-			.state('zm', {
+			.state('navigate.zm', {
 				url:'/zm',
 				onEnter: function(){
 					
 				}
 				
 			})
-			.state('navig', {
-				url:'/navig',
-				
-				
-			})
-			.state('drawpoint', {
+			.state('navigate.drawpoint', {
 				url:'/drawpoint',
 				onEnter: function(){
 					
 				}
 				
 			})
-			.state('drawline', {
+			.state('navigate.drawline', {
 				url:'/drawline',
 				onEnter: function(){
 					
 				}
 				
 			})
-			.state('drag', {
+			.state('navigate.drag', {
 				url:'/drag',
 				onEnter: function($stateParams){
 					 $stateParams.state="drag";
 				}
 				
 			})
-			.state('rotatter', {
+			.state('navigate.rotatter', {
 				url:'/rotatter',
 				onEnter: function($stateParams){
 					 $stateParams.state="rottater";
 				}
 				
 			})
-			.state('attrib', {
+			.state('navigate.attrib', {
 				url:'/attrib',
 				onEnter: function($stateParams){
 					 $stateParams.state="attrib";
 				}
 			})
-			.state('deleter', {
+			.state('navigate.deleter', {
 				url:'/deleter',
 				onEnter: function($stateParams){
 					 $stateParams.state="deleter";
 				}
 			})
-			.state('inform', {
+			.state('navigate.inform', {
 				url:'/inform',
 				onEnter: function(){
 					
 				}
 			})
-			.state('messure', {
+			.state('navigate.messure', {
 				url:'/messure',
 				onEnter: function(){
 					

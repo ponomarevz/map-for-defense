@@ -79,7 +79,8 @@
 
     <div id="map">
 		<div class="view" ng-include="selectedRoute.templateUrl"></div>
-		<div class="view" ng-include="'views/panel-instr.html'" ng-controller = 'panel-instr' style="position:absolute;"></div>
+		<div  ui-view="ls" style="width:400; float:right; position:absolute; left:200px; z-index:999; background:red;"></div>
+		<div class="view" ng-include="'views/panel-instr.html'" ng-controller = 'panel-instr'></div>
 	</div>
 	
 
@@ -113,6 +114,7 @@
 		<script src="scripts/service/baseLayerInit.js"></script>
 		<script src="scripts/controllers/olMapController.js"></script>
 		<script src="scripts/controllers/panel-instr.js"></script>
+		<script src="scripts/controllers/layerswitcher.js"></script>
 		
         <!-- endbuild -->
 		
