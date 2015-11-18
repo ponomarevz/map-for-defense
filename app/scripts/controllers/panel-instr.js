@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 	angular.module('App').
 		controller('panel-instr', function ($scope, $stateParams) {
 			var img = 'images/menu/redact.png';
@@ -16,6 +16,6 @@
 					img:it || img,
 					class:false || it
 				};
-			}
+			};
 								
 		});

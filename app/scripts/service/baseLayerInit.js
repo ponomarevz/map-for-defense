@@ -1,7 +1,7 @@
-'use strict'
+'use strict';
 	angular.module('App').
 		service('blInitService', function() {
-			
+			alert("asas");
 			var baseLayerIn = [];
 		//------------------------загружаем Google API----------------		
 		$.getScript( "http://maps.googleapis.com/maps/api/js" + "?callback=googleMapsLoaded" +  "&sensor=false"); //---использует калбек-------------

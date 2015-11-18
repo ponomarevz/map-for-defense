@@ -1,13 +1,11 @@
-
+'use strict';
 
 angular.module('App')
-	.controller('NavigationCtrl', function ($scope, $olMap, blInitService, $state, $stateParams) {
+	.controller('olMapController', function ($scope, $olMap, blInitService, $state, $stateParams) {
 		var map = $olMap.map;
 		map.addLayers(blInitService);	
 			
-		map.events.on({"moveend": stateChange}); 
-		function stateChange(e) {
-			//	router.navigate("navigate/" + map.baseLayer.name + "/" + map.getZoom()+ '/' +  map.getCenter().lon + "/" + map.getCenter().lat);
+		function stateChange() {
 			var konvert = encodeURI(map.baseLayer.name);
 			
 			var param = {
@@ -15,8 +13,10 @@ angular.module('App')
 				zoom: map.getZoom(),
 				lon: map.getCenter().lon,
 				lat: map.getCenter().lat
-			}
-			if ($stateParams.state == "navig") $state.go("navigate.navig", param); 
-			if ($stateParams.state == "layer") $state.go("navigate.layer", param);
-		}	
-})     
+			};
+			if ($stateParams.state === "navig") { $state.go("navigate.navig", param); }
+			if ($stateParams.state === "layer") { $state.go("navigate.layer", param); }
+		}
+		map.events.on({"moveend": stateChange});
+		
+});    

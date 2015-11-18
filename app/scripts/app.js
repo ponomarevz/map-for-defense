@@ -1,13 +1,29 @@
-
+'use strict';
+	
 	angular.module('App', ['ui.router']);
+	
+	angular.module('App').
+		controller('main', function ($scope) {
+			$scope.item = "sdfsdfs";
+			$scope.isAuthenticated	= function() {
+				return true;
+			};
+		});
 	
 	angular.module('App').
 		config(function($stateProvider, $urlRouterProvider, $olMapProvider) {
 			
 			
-			
-			
 		$stateProvider
+		.state('navigate.signin', {
+				url:'/signin',
+				views: {
+					'centrV@' : {
+						templateUrl:'views/signUp.html',
+						controller:'layerswitcher'
+					},
+				},
+			})
 			.state('navigate', {
 				url:'/navigate/:layer/:zoom/:lon/:lat',
 				onEnter: function($stateParams){
@@ -101,13 +117,11 @@
 				onEnter: function(){
 					
 				}
-			})
+			});
 				
-	})
-	.controller('NavigationCtrl', function ($scope, $location, routpar) {
-		
-
 	});
+	
+	
 	
 
 		
