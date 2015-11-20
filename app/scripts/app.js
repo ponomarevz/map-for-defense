@@ -4,9 +4,8 @@
 	
 	angular.module('App').
 		controller('main', function ($scope) {
-			$scope.item = "sdfsdfs";
 			$scope.isAuthenticated	= function() {
-				return true;
+				return false;
 			};
 		});
 	
@@ -15,6 +14,76 @@
 			
 			
 		$stateProvider
+		.state('navigate.search', {
+				url:'/serch/:param',
+				views: {
+					'search@' : {
+						template:'<h5>{{init}}</h5>',
+						controller: function($scope, res, $olMap) {
+							var map = $olMap.map;
+							var markers = $olMap.markers;
+							$scope.init =  res[0].geometry.location.lng();
+							
+							var proj = new OpenLayers.Projection("EPSG:4326");
+							var point = new OpenLayers.LonLat(res[0].geometry.location.lng(), res[0].geometry.location.lat());
+							var	LonLat = point.transform(proj, map.getProjectionObject())
+							map.setCenter(LonLat, 15);
+							setMarker(markers, LonLat);
+							
+							function setMarker(MarkL, LonLat){
+							MarkL.clearMarkers();
+							var size = new OpenLayers.Size(21,25);
+							var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+							var icon = new OpenLayers.Icon('img/marker.png', size,offset);
+							var marker = new OpenLayers.Marker(LonLat, icon);
+							marker.events.register('mousedown', marker, function(evt) {
+								alert(address);
+								OpenLayers.Event.stop(evt);
+							});
+							MarkL.addMarker(marker);
+						}
+						
+										
+									
+							
+						}
+					},
+				},
+				resolve: {
+					res: function($stateParams, $q) {
+						var address=$stateParams.param;
+						var geoCoder = new window.google.maps.Geocoder(address);
+						var request = { address:$stateParams.param };
+						
+						var deferred = $q.defer();
+						
+											//var map = document.getElementById("map");
+						geoCoder.geocode(request, function(result, status){
+							if (google.maps.GeocoderStatus.OK) {
+									if(!result[0]){
+										deferred.resolve("За данним запитом відомості відсутні");
+									}	 else {
+									
+										deferred.resolve(result);
+										
+									}
+										
+							} else {
+								deferred.reject("Google API Geokoder Filed ");
+							}	
+																		
+						});				
+						
+						
+						
+						
+						return deferred.promise;
+						
+						
+						
+					}
+				}
+		})
 		.state('navigate.signin', {
 				url:'/signin',
 				views: {

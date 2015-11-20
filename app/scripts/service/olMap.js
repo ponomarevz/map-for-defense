@@ -20,6 +20,41 @@
 			var osm_l = new OpenLayers.Layer.OSM('Карта'); osm_l.transitionEffect = 'resize';
 			var markers = new OpenLayers.Layer.Markers( "Markers" ); //----------пошукові маркери
 			map.addLayers([osm_l, markers]); markers.displayInLayerSwitcher = false;
+			
+			$.getScript( "http://maps.googleapis.com/maps/api/js" + "?callback=googleMapsLoaded" +  "&sensor=false"); //---использует калбек-------------
+		
+		//------------------------калбек после загрузки Google API----------------	
+		window.googleMapsLoaded = function(){
+				var gsat = new OpenLayers.Layer.Google(
+						"Google Satellite", {
+						type: google.maps.MapTypeId.SATELLITE,
+						numZoomLevels: 20
+				   	}
+				);
+				var hibr = new OpenLayers.Layer.Google(
+						"Google Гибрид", {
+						type: google.maps.MapTypeId.HYBRID,
+						numZoomLevels: 20
+				   	}
+				);
+				var terain = new OpenLayers.Layer.Google(
+						"Google terrain", {
+						type: google.maps.MapTypeId.TERRAIN,
+						numZoomLevels: 20
+				   	}
+				);
+				var roadm = new OpenLayers.Layer.Google(
+						"Google ROADMAP", {
+						type: google.maps.MapTypeId.ROADMAP,
+						numZoomLevels: 20
+				   	}
+				);
+				
+		   
+			map.addLayers([ gsat, hibr, terain, roadm ]);	
+			//-----XXXX спорній вопрос о необїходимости єтой переменной
+			window.googleAPist = 1;		 
+		};
 		
 				
 		
@@ -37,10 +72,12 @@
 
 					map: map,
 					olS: olS,
+					markers: markers,
 					
 					$get: function() {
 						return {
-							map: map
+							map: map,
+							markers: markers
 						};
 					}
 

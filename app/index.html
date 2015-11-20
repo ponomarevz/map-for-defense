@@ -39,9 +39,10 @@
 		<div class="col-sm-3 col-md-4">
 			<form class="navbar-form">
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Пошук" name="q">
+					<input type="text" class="form-control" placeholder="Пошук" name="q" ng-model='zaput'>
 					<div class="input-group-btn">
-						<button class="btn btn-default" type="button" onclick="location.hash = '#searh'"><i class="glyphicon glyphicon-search"></i></button>
+						
+						<button class="btn btn-default" ui-sref="navigate.search({param:zaput})"><i class="glyphicon glyphicon-search"></i></button>
 					</div>
 				</div>
 			</form>
@@ -68,7 +69,7 @@
 		
 			<form class="navbar-form navbar-right" ng-hide="isAuthenticated()">
 				<a href="#reestr">Приєднуйтеь</a>
-				<button class="btn btn-default" type="button" ui-sref="navigate.signin"><i class="glyphicon glyphicon-user"></i></button>
+				<button class="btn btn-default" ui-sref="navigate.signin"><i class="glyphicon glyphicon-user"></i></button>
 			</form>
 		
 				
@@ -78,8 +79,9 @@
 
     <div id="map" ng-controller = "olMapController">
 		<div class="col-md-12 col-xs-12" ui-view="centrV" style="height:10px; backgroun-color:red; position:absolute; z-index:999;"></div>
-		<div class="col-md-3 col-md-offset-9 col-sm-4 col-sm-offset-8 col-xs-8 col-xs-offset-4" ui-view="ls" style="height:10px; position:absolute; z-index:999;"></div>
+		<div class="col-md-3 col-md-offset-9 col-sm-4 col-sm-offset-8 col-xs-8 col-xs-offset-4" ui-view="ls" style="position:absolute; z-index:999;"></div>
 		<div class="view" ng-include="'views/panel-instr.html'" ng-controller = 'panel-instr'></div>
+		<div class="col-md-4 col-sm-4 col-xs-8" ui-view="search" style="margin-top:330px; margin-left:30px; height:100px; background-color: red; position:absolute; z-index:999;"></div>
 	</div>
 	
 
@@ -105,8 +107,10 @@
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
+		
 		<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 		<script src="bower_components/ol/OpenLayers-min.js"></script>
+		
 		<script src="scripts/app.js"></script>
 		<script src="scripts/formap/Here.js"></script>
 		<script src="scripts/service/olMap.js"></script>

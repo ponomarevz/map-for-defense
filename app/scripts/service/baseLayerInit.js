@@ -1,43 +1,10 @@
 'use strict';
 	angular.module('App').
 		service('blInitService', function() {
-			alert("asas");
+			
 			var baseLayerIn = [];
 		//------------------------загружаем Google API----------------		
-		$.getScript( "http://maps.googleapis.com/maps/api/js" + "?callback=googleMapsLoaded" +  "&sensor=false"); //---использует калбек-------------
 		
-		//------------------------калбек после загрузки Google API----------------	
-		window.googleMapsLoaded = function(){
-				var gsat = new OpenLayers.Layer.Google(
-						"Google Satellite", {
-						type: google.maps.MapTypeId.SATELLITE,
-						numZoomLevels: 20
-				   	}
-				);
-				var hibr = new OpenLayers.Layer.Google(
-						"Google Гибрид", {
-						type: google.maps.MapTypeId.HYBRID,
-						numZoomLevels: 20
-				   	}
-				);
-				var terain = new OpenLayers.Layer.Google(
-						"Google terrain", {
-						type: google.maps.MapTypeId.TERRAIN,
-						numZoomLevels: 20
-				   	}
-				);
-				var roadm = new OpenLayers.Layer.Google(
-						"Google ROADMAP", {
-						type: google.maps.MapTypeId.ROADMAP,
-						numZoomLevels: 20
-				   	}
-				);
-				
-		   
-			baseLayerIn.push([ gsat, hibr, terain, roadm ]);	
-			//-----XXXX спорній вопрос о необїходимости єтой переменной
-			window.googleAPist = 1;		 
-		};
 		
 		//------------------------СЛОИ OSM----------------	
 		var osm_l_rel1 = new OpenLayers.Layer.OSM("Рельеф1 OSM",
