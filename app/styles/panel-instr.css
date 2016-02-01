@@ -71,3 +71,33 @@
 	.active1 {
 		border-left: 10px solid #52b6ec !important;
 	}
+	
+	
+.slideout {
+  position: fixed;
+  left: 0;
+  transition: all 0.4s;
+  
+  
+ }
+.slideouthover {
+  left: 200px;
+}
+
+.slideoutinner {
+	background-color: rgba(138, 176, 204, 0.6); /* Old browsers */
+	width:0px;
+	height:500px;
+	position: fixed;
+	top: 70px;
+	left: 0px;
+	transition: all 0.4s;
+ }
+ 
+ .slideoutinnerhover {
+	 width:200px;
+	
+ }
+
+
+

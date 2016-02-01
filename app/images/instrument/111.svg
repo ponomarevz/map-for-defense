@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="no"?>
+<svg width="40" height="40" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <g>
+  <title>Layer 1</title>
+  <line fill="none" stroke-width="2" stroke="#fc0505" id="svg_1" y2="38.108341" x2="5.232285" y1="3.10834" x1="4.732285"/>
+  <line fill="none" stroke-width="2" stroke="#fc0505" id="svg_2" y2="16.858409" x2="37.233338" y1="4.108409" x1="5.233338"/>
+  <line fill="none" stroke-width="2" stroke="#fc0505" id="svg_3" y2="29.358334" x2="4.73333" y1="16.608334" x1="36.48333"/>
+  <ellipse ry="6" rx="5.5" stroke-dasharray="null" stroke-width="2" stroke="#fc0505" fill="none" id="svg_4" cy="30.108334" cx="30.73333"/>
+  <line fill="none" stroke-dasharray="null" stroke-width="2" stroke="#fc0505" id="svg_5" y2="30.608334" x2="32.23333" y1="32.858334" x1="10.73333"/>
+  <line fill="none" stroke-dasharray="null" stroke-width="2" stroke="#fc0505" id="svg_6" y2="25.608334" x2="22.73333" y1="30.608334" x1="31.48333"/>
+  <line fill="none" stroke-dasharray="null" stroke-width="2" stroke="#fc0505" id="svg_7" y2="35.858334" x2="22.48333" y1="30.108334" x1="31.48333"/>
+ </g>
+</svg>

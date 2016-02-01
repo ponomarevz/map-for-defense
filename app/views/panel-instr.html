@@ -1,7 +1,9 @@
-<div id="panel" class="o1"></div>
-			<ul class = "pan_instr">
-			<br> <br> <br>
-				
+<div class="slideoutinner pan_instr_z_nv" ng-class="{'slideoutinnerhover': isSlideHover()}">
+	<div ui-view="menuCont" class = "sliderCont"></div>
+</div>
+<div class="slideout" ng-class="{'slideouthover': isSlideHover()}">
+			<ul class = "pan_instr" style = "margin-top: 80px;">
+							
 					<li><a ui-sref="navigate.layer" ui-sref-active="active" class = "pan_instr_z_nv">
 						<img title="CHANGE LAYER" src="images/menu/layer.png">
 					</a></li>
@@ -16,7 +18,7 @@
 						<img src="images/menu/heand.png">
 					</a></li>
 					<br>
-					<li><a ui-sref="navigate.drawpoint" ui-sref-active="active" class="pan_instr_z_v">
+					<li><a ui-sref="navigate.drawpoint" ui-sref-active="active" ui-sref-opts="{reload: true}" class="pan_instr_z_v">
 						<img title="" src="images/menu/point.png">
 					</a></li>
 					<li><a ui-sref="navigate.drawline" ui-sref-active="active" class="pan_instr_z_n">
@@ -50,3 +52,5 @@
 						<img title="" src="images/menu/mesur.png">
 					</a></li>
 			</ul>	
+</div>
+	
