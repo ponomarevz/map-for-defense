@@ -3,10 +3,13 @@
 	angular.module('App', ['ui.router', 'ngAnimate']);
 	
 	angular.module('App').
-		controller('main', function ($scope) {
+		controller('main', function ($scope, instrServ) {
 			$scope.isAuthenticated	= function() {
 				return false;
 			};
+			instrServ.getInstr().then(function(res){
+				alert(res);
+			});
 		});
 	
 	angular.module('App').
@@ -162,6 +165,8 @@
 						c.obj = b;
 						
 						return c;
+						
+						//instrServ
 						
 					}
 				},

@@ -67,6 +67,8 @@
 			var olS = new OpenLayers.Control.LayerSwitcher(); olS.fl = 0;
 			var mPosit = new OpenLayers.Control.MousePosition();
 				map.addControls([Knavig, mashtL, olS, mPosit]);
+				
+				
 
 				return {
 
