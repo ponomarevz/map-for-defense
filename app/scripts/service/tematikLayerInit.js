@@ -144,7 +144,8 @@
 										}
 										//alert(feature.attributes.fl_c);
 										
-										url = createBlobSvg(url, kolorS, tr);
+										//url = createBlobSvg(url, kolorS, tr);
+										url = instrServ.getSvgUrlM(url, kolorS, tr);
 										feature.blob =  url;
 									} else url = feature.blob;
 								}
@@ -181,8 +182,8 @@
 										}
 									//	url = createBlobSvg(url, kolorS, tr);
 										
-										url = createBlobSvg(url, kolorS, tr, "ramka");
-										
+										//url = createBlobSvg(url, kolorS, tr, "ramka");
+										url = instrServ.getSvgUrlM(url, kolorS, tr, "ramka");
 									
 								}
 							} else {

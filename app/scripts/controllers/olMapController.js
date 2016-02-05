@@ -55,10 +55,46 @@ angular.module('App')
 				instrServ.getInstr().then(function(res){
 						console.log(res);
 						var l = tematikLayerInit.layerInit("point", "Точкові обекті", "http://10.246.2.194/proxi.php/wfsauth", "pdr", hesh_poley_pdr);
-						var b = tematikLayerInit.layerInit("line", "Лінійні обїекти", "http://10.246.2.194/proxi.php/wfsauth", "line", hesh_poley_line);
+						//var b = tematikLayerInit.layerInit("line", "Лінійні обїекти", "http://10.246.2.194/proxi.php/wfsauth", "line", hesh_poley_line);
 						console.log(l.layer);
-						map.addLayers([l.layer, b.layer]);
+						map.addLayers([l.layer]);
 						
+						
+						var Kselect1 = new OpenLayers.Control.SelectFeature( [l.layer], { 
+			hover: true, 
+						callbacks:{
+                    //--------------- наступает до селекта
+					'over' : function(f) {
+						//that.control.edit.feature
+						//if ()
+						if ((f.fid) && (f.select != true)) {
+							f.renderIntent = "select"; 
+							f.layer.drawFeature(f);
+							//alert(f.attributes.bH);
+														
+						}
+					},
+					'out' : function(f) {
+					 if ((f.fid) && (f.select != true)) {
+							f.renderIntent = "default"; 
+							f.layer.drawFeature(f);
+						}
+					},
+					'click' : function(f) {
+						
+					}
+				}
+				
+			});
+			
+			var Kselect = new OpenLayers.Control.SelectFeature([l.layer]);
+			
+			var Knavig = new OpenLayers.Control.Navigation();
+			var mashtL = new OpenLayers.Control.ScaleLine({geodesic: true, bottomInUnits: 'km', topInUnits: 'm' });
+			
+			 
+						
+						map.addControls([Kselect1, Kselect ]); Kselect1.activate();
 				});
 			
 			

@@ -40,7 +40,7 @@ angular
 					
 					function createBlobSvg(data, atribut, trn, ramka) {
 						
-						
+						data = data.replace(/№/g, '"');
 						
 						if (ramka) {
 							//alert("dfsd");
@@ -122,9 +122,15 @@ angular
 			
 			this.getSvgUrl = function(url) {
 				
-				url = url.replace(/№/g, '"');
+				
 				return createBlobSvg(url, "red");
 				
+			}
+			
+			this.getSvgUrlM = function(url) {
+				console.log(arguments);
+				
+				return createBlobSvg.apply(this, arguments);
 			}
 		
 		
