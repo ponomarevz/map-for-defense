@@ -1,12 +1,11 @@
 'use strict';
 
 angular.module('App')
-	.controller('olMapController', function ($scope, $olMap, blInitService, $state, $stateParams, tematikLayerInit) {
+	.controller('olMapController', function ($scope, $olMap, blInitService, $state, $stateParams, tematikLayerInit, instrServ) {
 		var map = $olMap.map;
 		map.addLayers(blInitService);	
 		
-		
-		var  hesh_poley_pdr = { 
+				var  hesh_poley_pdr = { 
 						"id": {"name": "ID", "status": "slugbova", "type": "text", "minLength": 0, "maxLength": 15, "dataType": "int", "def": "",
 								"nota":""},
 						"name": {"name": "Назва", "status": "zagalna", "type": "text", "minLength": 2, "maxLength": 15, "dataType": "text", "def": "",
@@ -53,11 +52,17 @@ angular.module('App')
 					};	
 		
 		
-		
-			//var l = tematikLayerInit.layerInit("point", "Точкові обекті", "http://10.246.2.194/proxi.php/wfsauth", "pdr", hesh_poley_pdr);
-			//var b = tematikLayerInit.layerInit("line", "Лінійні обїекти", "http://10.246.2.194/proxi.php/wfsauth", "line", hesh_poley_line);
+				instrServ.getInstr().then(function(res){
+						console.log(res);
+						var l = tematikLayerInit.layerInit("point", "Точкові обекті", "http://10.246.2.194/proxi.php/wfsauth", "pdr", hesh_poley_pdr);
+						var b = tematikLayerInit.layerInit("line", "Лінійні обїекти", "http://10.246.2.194/proxi.php/wfsauth", "line", hesh_poley_line);
+						console.log(l.layer);
+						map.addLayers([l.layer, b.layer]);
+						
+				});
 			
-			//map.addLayers(l.layer, b.layer);
+			
+			
 			
 			
 		function stateChange() {

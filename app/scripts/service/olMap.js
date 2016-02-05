@@ -13,7 +13,7 @@
 			OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
 			OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
 				
-			var map = new OpenLayers.Map('map', options);
+			var map = new OpenLayers.Map( 'map', options);
 			      			
 			OpenLayers.Lang.setCode('ru');
 			//-------------подключаем первую подложку           

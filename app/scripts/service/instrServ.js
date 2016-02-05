@@ -73,6 +73,9 @@ angular
 			
 			
 			//---------------получение панели инструментов-----------------
+			var panel = {};
+			var hesh = {};
+			
 			this.getInstr = function() {
 				var url = 'http://10.246.2.194/pinstrEx.php';
 				
@@ -83,16 +86,25 @@ angular
 						var a = res.data;
 						
 						for ( var i in a.contents_obj) {
-							
-							if (!b[a.contents_obj[i].id_rozdil]) { 
-								b[a.contents_obj[i].id_rozdil] = [];
+							var item = a.contents_obj[i];
+							if (!b[item.id_rozdil]) { 
+								b[item.id_rozdil] = [];
 							}
-							b[a.contents_obj[i].id_rozdil].push(a.contents_obj[i]);
-						
+							b[item.id_rozdil].push(item);
+							
+							hesh[item.id_obj] = { 	'src' : item.obj_src, 
+										'position' :  item.obj_position, 
+										'rotation' :  item.obj_rotate, 	
+										'obj_type' : item.obj_type, 
+										'title': item.obj_title,
+										'rozdil' : item.id_rozdil
+										};
+							
 						
 						c.roz = a;
 						c.obj = b;
 						panel = c;
+						//alert("z nene");
 						}
 						return c;
 					
@@ -101,15 +113,18 @@ angular
 			
 			//---------------интерфейс для отдачи панели-------------
 			this.getLocPan = function() {
-				
 				return panel;
+			}
+			
+			this.getLocHesh = function() {
+				return hesh;
 			}
 			
 			this.getSvgUrl = function(url) {
 				
-				var nev_url = url.replace(/№/g, '"');
-				nev_url = createBlobSvg(nev_url, "red");
-				return nev_url;
+				url = url.replace(/№/g, '"');
+				return createBlobSvg(url, "red");
+				
 			}
 		
 		

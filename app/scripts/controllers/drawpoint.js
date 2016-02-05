@@ -1,6 +1,6 @@
 'use strict';
 	angular.module('App').
-		controller('drawpoint', function ($scope, $stateParams, rozdilu, instrServ) {
+		controller('drawpoint', function ($scope, $stateParams, instrServ) {
 			
 			$scope.model = instrServ.getLocPan().roz;
 			$scope.obj = instrServ.getLocPan().obj;
@@ -29,7 +29,7 @@
 					if (scope.srcType == "svg") {
 										
 						scope.sr = instrServ.getSvgUrl(scope.srcValue);
-						//url = instrServ.getSvgUrl(url);
+						
 					} else {
 						scope.sr = scope.srcValue;
 					}

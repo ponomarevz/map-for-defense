@@ -1,6 +1,6 @@
 
 	angular.module('App').
-		service('tematikLayerInit', function($olMap) {
+		service('tematikLayerInit', function($olMap, instrServ) {
 			var map = $olMap.map;
 	
 	/* 	masht_norm - значение масштаба на которій нормализуется значок
@@ -21,7 +21,7 @@
 	};
 	
 	
-		
+		var id_obj = 105; //-------тимчасово
 	/*-------------------конструктор инициализации тематического слоя--------
 		type - тип весторного слоя
 		name - название векторного слоя
@@ -101,10 +101,10 @@
 								id = feature.attributes.instr; //---если рендерим слой
 							} else id = id_obj;											   //---если наносим обїект
 						    	xofs = this.w/2*(-1);
-						    if (hash[id].position == 1) { 
+						    if (instrServ.getLocHesh()[id].position == 1) { 
 								xofs = 0 - 2;
 						    } 
-						    if (hash[id].position == 2) { 
+						    if (instrServ.getLocHesh()[id].position == 2) { 
 								xofs = this.w*(-1) +2;
 						    } 
 							return xofs; 
@@ -116,7 +116,7 @@
 								id = feature.attributes.instr; //---если рендерим слой
 							} else id = id_obj;											   //---если наносим обїект
 						   	yofs = this.h/2*(-1);
-						    if ((hash[id].position == 1) || (hash[id].position == 2)) { 
+						    if ((instrServ.getLocHesh()[id].position == 1) || (instrServ.getLocHesh()[id].position == 2)) { 
 								yofs = this.h*(-1) + 2;
 							} 
 							return yofs; 
@@ -129,8 +129,8 @@
 								f_a = feature.attributes;
 							if (f_a.instr) { 
 								id = f_a.instr; //---если рендерим слой
-								url = hash[id].src;
-								if (hash[id].obj_type == "svg") {                                //if (hash[id].obj_type == "svg")
+								url = instrServ.getLocHesh()[id].src;
+								if (instrServ.getLocHesh()[id].obj_type == "svg") {                                //if (hash[id].obj_type == "svg")
 									if (!feature.blob) {
 										var kolorS = "red";
 										if (f_a.ahref != "") {
@@ -149,8 +149,9 @@
 									} else url = feature.blob;
 								}
 							} else {
-								url = hash[id_obj].src;
-								if (hash[id_obj].obj_type == "svg") {                                 //(hash[id].obj_type == "svg")
+								console.log(instrServ.getLocHesh());
+								url = instrServ.getLocHesh()[id_obj].src;
+								if (instrServ.getLocHesh()[id_obj].obj_type == "svg") {                                 //(hash[id].obj_type == "svg")
 									url = blobURL;
 								}
 							}
@@ -164,9 +165,9 @@
 								f_a = feature.attributes;
 							if (f_a.instr) { 
 								id = f_a.instr; //---если рендерим слой
-								url = hash[id].src;
+								url = instrServ.getLocHesh()[id].src;
 								
-								if (hash[id].obj_type == "svg") {                                //if (hash[id].obj_type == "svg")
+								if (instrServ.getLocHesh()[id].obj_type == "svg") {                                //if (hash[id].obj_type == "svg")
 									
 										var kolorS = "red";
 										if (f_a.ahref != "") {
@@ -185,8 +186,8 @@
 									
 								}
 							} else {
-								url = hash[id_obj].src;
-								if (hash[id_obj].obj_type == "svg") {                                 //(hash[id].obj_type == "svg")
+								url = instrServ.getLocHesh()[id_obj].src;
+								if (instrServ.getLocHesh()[id_obj].obj_type == "svg") {                                 //(hash[id].obj_type == "svg")
 									url = blobURL;
 								}
 							}
@@ -416,7 +417,7 @@
 		
 		tLayer.control.edit = new OpenLayers.Control.ModifyFeature(tLayer.layer, { vertexRenderIntent: "temporary", virtualStyle: virtual})
 		
-		tLayer.control.rotate =  new OpenLayers.Control.RotateGraphicFeature(tLayer.layer); tLayer.control.rotate.mode = OpenLayers.Control.ModifyFeature.ROTATE;
+		//tLayer.control.rotate =  new OpenLayers.Control.RotateGraphicFeature(tLayer.layer); tLayer.control.rotate.mode = OpenLayers.Control.ModifyFeature.ROTATE;
 		
 		if (type == "point") {
 			tLayer.control.draw = new OpenLayers.Control.DrawFeature(tLayer.layer, Htype, { 
