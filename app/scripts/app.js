@@ -11,7 +11,7 @@
 		});
 	
 	angular.module('App').
-		config(function($stateProvider, $urlRouterProvider, $olMapProvider) {
+		config(function($stateProvider, $urlRouterProvider, $olMapProvider, $injector) {
 			
 			
 		$stateProvider
@@ -163,13 +163,15 @@
 				url:'/drag',
 				onEnter: function($stateParams){
 					 $stateParams.state="drag";
+					
 				}
 				
 			})
 			.state('navigate.rotatter', {
 				url:'/rotatter',
-				onEnter: function($stateParams){
-					 $stateParams.state="rottater";
+				onEnter: function($stateParams, tematikLayerInit){
+					$stateParams.state="rottater";
+					tematikLayerInit.getLayer('p1').control.rotate.activate();;
 				}
 				
 			})

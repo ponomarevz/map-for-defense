@@ -1,6 +1,6 @@
 
 	angular.module('App').
-		service('tematikLayerInit', function($olMap, instrServ) {
+		service('tematikLayerInit', function($olMap, instrServ, $stateParams) {
 			var map = $olMap.map;
 	
 	/* 	masht_norm - значение масштаба на которій нормализуется значок
@@ -22,13 +22,35 @@
 	
 	
 		var id_obj = 105; //-------тимчасово
+	
+	//----------------хеш-таблица созданных тематических слоев---------------
+		var layer = {};
+		
+	/*-----------функция доступа к тематическому слою ------------------------
+							---	getLayer ---
+		id - id-шник векторного слоя (для доступа из сервиса)
+		
+		возвращает ссылку на векторный OL слой по его id из
+		хеш-таблицы layer
+	-------------------------------------------------------------------------*/
+		this.getLayer = function(id) {
+			console.log(layer[id]);
+			return layer[id];
+		};
+			
 	/*-------------------конструктор инициализации тематического слоя--------
+								--- layerInit ---
+		name - имя слоя 
 		type - тип весторного слоя
 		name - название векторного слоя
 		source - источник векторного слоя
-		pdr - таблица векторного слоя
+		table - таблица векторного слоя
+		id - id-шник векторного слоя (для доступа из сервиса)
+		
+		возвращает созданный векторный OL слой соответствующего типа и 
+		добавляет его в хеш-таблицу layer по id векторного слоя
 	------------------------------------------------------------------------*/
-	this.layerInit = function(type, name, source, table, hesh_poley) {
+	this.layerInit = function(id, type, name, source, table, hesh_poley) {
 		var tLayer = {}; //---------создаем тематический слой
 		var  Htype;
 		//-----------------------инициализация Strategy.Save ------------------------ возможно придется сделать открітй метод
@@ -363,7 +385,7 @@
 						strokeColor: "${color}",
 						fillColor  : "#1f1111",
 						rotation:"${angle}",
-						graphicName:"arrow",
+						//graphicName:"arrow",
 						graphicYOffset: -10,
 						strokeWidth: "${with}",
 						strokeOpacity: "${opacity}",
@@ -418,7 +440,7 @@
 		
 		tLayer.control.edit = new OpenLayers.Control.ModifyFeature(tLayer.layer, { vertexRenderIntent: "temporary", virtualStyle: virtual})
 		
-		//tLayer.control.rotate =  new OpenLayers.Control.RotateGraphicFeature(tLayer.layer); tLayer.control.rotate.mode = OpenLayers.Control.ModifyFeature.ROTATE;
+		tLayer.control.rotate =  new OpenLayers.Control.RotateGraphicFeature(tLayer.layer); tLayer.control.rotate.mode = OpenLayers.Control.ModifyFeature.ROTATE;
 		
 		if (type == "point") {
 			tLayer.control.draw = new OpenLayers.Control.DrawFeature(tLayer.layer, Htype, { 
@@ -471,7 +493,8 @@
 		}
 				
 		function onFeatureSelect(evt) {
-			
+			var state =  $stateParams.state;
+			 console.log(state);
 			
 			var feature = evt.feature;
 									feature_select = feature;
@@ -492,7 +515,7 @@
 				var re = /#/g;
 				var result_atr = atr.replace(re, "~");	
 				
-				router.navigate("feature_modifed/" + feature.layer.name + "/" + feature.fid + "/" + feature.renderIntent + "/" + str + "/" + result_atr);
+				//router.navigate("feature_modifed/" + feature.layer.name + "/" + feature.fid + "/" + feature.renderIntent + "/" + str + "/" + result_atr);
 				
 			}
 			
@@ -501,29 +524,30 @@
 				var atr = JSON.stringify(feature.attributes)
 				var re = /#/g;
 				var result_atr = atr.replace(re, "~");					
-				router.navigate("feature_modifed/" + feature.layer.name + "/" + feature.fid + "/" + feature.renderIntent + "/" + feature.geometry.x + "/" + feature.geometry.y + "/" + result_atr);	
+				//router.navigate("feature_modifed/" + feature.layer.name + "/" + feature.fid + "/" + feature.renderIntent + "/" + feature.geometry.x + "/" + feature.geometry.y + "/" + result_atr);	
 				console.log(result_atr);
 			
 			}
 			
 						
-			if (fl_red == 2) {
+			if (state == 2) {
 				$('#information1').css({'width': win.width, 'height': win.height})
 				.popUp("contentAdd", feature, hesh_poley, "inf", "Подпись окна").popUp("updatePosition", LonLat).fadeIn(1000); 
 			}
 					//if 	(podr.redaguv) {
-			if (fl_red == 1) { 
+					
+			if (state == 'drag') { 
 				feature.state = OpenLayers.State.UPDATE;
 				tLayer.control.edit.selectFeature(feature);
-				//alert("asdxas");
+				
 			}
-			if (fl_red == 5) { 
+			if (state == 'rotatter') { 
 				//feature.state = OpenLayers.State.UPDATE;
 				//tLayer.control.rotate.selectFeature(feature);
 				//alert("asdxas");
 			}
 								
-			if (fl_red == 3) {
+			if (state == 3) {
 				$('#information1').css({'width': win.width, 'height': win.height})
 					.popUp("contentAdd", feature, hesh_poley, "update", "Подпись окна", function() {
 						feature.blob = null;		
@@ -538,7 +562,7 @@
 				}).popUp("updatePosition", LonLat).fadeIn(1000); 
 			}
 			
-			if (fl_red == 4) {
+			if (state == 4) {
 				feature.state = OpenLayers.State.DELETE;
 				saveStrategy.save();
 				tLayer.layer.redraw();
@@ -548,20 +572,21 @@
 			console.log(evt.feature.layer.name);
 		}
 		function onFeatureUnselect(evt) {
+			var state =  $stateParams.state;
 			feature_select = null;
 				
 			var feature = evt.feature;
 			feature.select = false;
-			if (fl_red == 1) {
+			if (state== 'drag') {
 				tLayer.control.edit.unselectFeature(tLayer.control.edit.feature);
-				router.navigate("feature_modifed/" + feature.layer.name + "/" + feature.fid + "/" + feature.renderIntent + "/" + feature.geometry.x + "/" + feature.geometry.y + "/" + JSON.stringify(feature.attributes));
+				//router.navigate("feature_modifed/" + feature.layer.name + "/" + feature.fid + "/" + feature.renderIntent + "/" + feature.geometry.x + "/" + feature.geometry.y + "/" + JSON.stringify(feature.attributes));
 			}
-			if (fl_red == 5) { 
+			if (state == 'rotatter') { 
 				//feature.state = OpenLayers.State.UPDATE;
 				//tLayer.control.rotate.unselectFeature(tLayer.control.rotate.feature);
 				//alert("asdxas");
 			}
-			if (fl_red == 2) {
+			if (state == 2) {
 				$('#information').hide(); 
 			}
 		}
@@ -571,8 +596,65 @@
 			tLayer.control.draw.deactivate();
 		
 		}
-			
+		
+		//-----------возвращаем Layer для доступа из сервиса
+				layer[id] = tLayer;
 				return tLayer;
+			
+	};
+	
+	//----------- объект содержащий два OL контрола Select-------------------
+	
+	var selectContr = {};
+	/*-------------------конструктор инициализации тематического слоя--------
+								--- selectInit ---
+		Инициализирует два контрола для Selecta необходимо для создания 
+		множественного Selecta из всех тематических слоев и создания єффекта
+		Hover
+		требует инициализации после добавления всех тематических слоев
+		
+		возвращает два OL контрола Select  и добпавляет их в
+		хеш-таблицу selectContr по:
+		
+		------------------------------------------------------------------------*/
+	this.selectInit = function() {
+			var layerMas = [];
+			for (i in layer) {
+				layerMas.push(layer[i]);
+			}
+			var Kselect1 = new OpenLayers.Control.SelectFeature( layerMas, { 
+						hover: true, 
+						callbacks:{
+                    //--------------- наступает до селекта
+					'over' : function(f) {
+						if ((f.fid) && (f.select != true)) {
+							f.renderIntent = "select"; 
+							f.layer.drawFeature(f);
+							//alert(f.attributes.bH);
+						}
+					},
+					'out' : function(f) {
+						if ((f.fid) && (f.select != true)) {
+							f.renderIntent = "default"; 
+							f.layer.drawFeature(f);
+						}
+					},
+					'click' : function(f) {
+						
+					}
+				}
+				
+			});
+			
+			var Kselect = new OpenLayers.Control.SelectFeature(layerMas);  
+			selectContr['osn'] = Kselect1;
+			selectContr['dop'] = Kselect;
+			map.addControls([Kselect1, Kselect]);
+			
+	};
+	
+	this.getSelect = function(id) {
+		return selectContr[id];
 	}
 	
 });

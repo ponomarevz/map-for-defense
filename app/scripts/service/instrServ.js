@@ -51,7 +51,7 @@ angular
 						var svg = new $window.Blob([data], {type: 'image/svg+xml;charset=utf-8'});
 						
 						var url = DOMURL.createObjectURL(svg);
-						console.log(url);
+						//console.log(url);
 						//var url = "/img/my/telekom/i1_act.png";
 						
 						return url;
@@ -128,7 +128,7 @@ angular
 			}
 			
 			this.getSvgUrlM = function(url) {
-				console.log(arguments);
+			//	console.log(arguments);
 				
 				return createBlobSvg.apply(this, arguments);
 			}
