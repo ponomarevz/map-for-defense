@@ -1,158 +1,212 @@
-
-
-
-
-	angular.module('App', []).
-		controller('NavigationCtrl', function ($scope, $location, routpar) {
-		
-		$scope.$watch(function () { 
-			return $location.path();
-		}, 
-		function (newPath) {
-			var arg = newPath.split("/"); //-------------передаем полній хеш
-				if (routes[newPath]) {
-					//----------------татичекий роут
-					$scope.selectedRoute = routes[newPath];
-					//alert($scope.selectedRoute.templateUrl);
-				} else {
-					var f_rout = "/" + arg[1]; 
-					if (routes[f_rout] && routes[f_rout].templateFunParam && routes[f_rout].templateFunParam.length == arg.length - 2) {
-						$scope.selectedRoute = routes[f_rout];
-						//готовим динамичекую чать
-					} else $scope.selectedRoute = defaultRoute;
-				}
-			
-			var ind = $scope.selectedRoute; 
-			if (ind.templateFun) {
-				routesMethod[ind.templateFun].apply(ind, arg.slice(2)); 
+'use strict';
+	
+	angular.module('App', ['ui.router', 'ngAnimate']);
+	
+	angular.module('App').
+		controller('main', function ($scope, instrServ) {
+			$scope.isAuthenticated	= function() {
+				return false;
 			};
-		});
-		
-		/*--------------------Мой роутер-----------------------------
-		'/' - путь роутера поле хеша ( для динаичекого поддерживаем протой путь только до первого леша отальное динамика)
-		templateUrl - адре HTML шаблона подтавляемого в ng-ilude
-		templateFun - функция віполняемая в результате роутинга на подобии bakbone
-		templateFunParam - пиок игнатур параметров в динамичекой чати роутера в виде маива
-		--------------------------------------------------------------*/
-		var routes = {
-			'/': {templateUrl: '', templateFun: ''},
-			'/reestr': {templateUrl: '', templateFun: 'reestr'},
-			'/signUp': {templateUrl: 'views/signUp.html', templateFun: 'signUp'},
-			'/navigate': {templateUrl: '', templateFun: 'nav', templateFunParam: ['layer', 'zoom', 'lon', 'lat']}, 
-			'/layer': {templateFun: 'layer'},
-			'/navig': {templateFun: 'navig'},
-			'/drawpoint': {templateFun: 'drawpoint'},
-			'/drawline': {templateFun: 'drawline'},
-			'/drag': {templateFun: 'drag'},
-			'/rotater': {templateFun: 'rotater'},
-			'/attrib': {templateFun: 'attrib'},
-			'/deleter': {templateUrl: '', templateFun: 'deleter'},
-			'/inform': {templateUrl: '', templateFun: 'inform'},
-			'/messure': {templateUrl: '', templateFun: 'messure'}
-			//'feature_modifed/:layer/:feat_id/:feat_rend/:feat_geomx/:feat_geomy/:feat_attr' : 'featModif_point',
-			//eature_modifed/:layer/:feat_id/:feat_rend/:str/:feat_attr' : 'featModif_line'
-		};
-		var defaultRoute = routes['/'];
-		function deactivInstr() {
-			olS.minimizeControl();
-		}		
-	var routesMethod = {
-		reestr: function(){
-			alert("dADa");
-		},
-		signUp: function() {
-			//$('#rozdil').signUp('show');
-		},
-		nav: function(layer, zoom, lon, lat) {
-			layer = decodeURI(layer.replace(/\./g, "%"));
-			map.moveTo( new OpenLayers.LonLat(lon, lat), zoom);
-			var l = map.getLayersByName(layer)[0];
-			map.setBaseLayer(l);
-		},
-//------------ роутер панель интрументов---------------
-		layer: function() {
-			routpar.setState("layer");
-			deactivInstr();
-			olS.maximizeControl();
-		},
-		navig: function() {
-			routpar.setState("navig");
-			deactivInstr();
-		},
-		drawpoint: function() {
-			routpar.setState("drawpoint");
-			deactivInstr();
-		},
-		drawline: function() {
-			routpar.setState("drawline");
-			deactivInstr();
-		},
-		drag: function() {
-			routpar.setState("drag");
-			deactivInstr();
-		}, 
-		rotater: function() {
-			routpar.setState("rotater");
-			deactivInstr();
-		}, 
-		attrib: function() {
-			routpar.setState("attrib");
-			deactivInstr();
-		}, 
-		deleter: function() {
-			routpar.setState("deleter");
-			deactivInstr();
-		},	
-		inform: function() {
-			routpar.setState("inform");
-			deactivInstr();
-		},	
-		messure: function() {
-			routpar.setState("messure");
-			deactivInstr();
-		}
-	}	
-	});
-
-
-		var options = {
-			maxResolution: 156543.0339, // изучитьт
-            projection: new OpenLayers.Projection("EPSG:900913"),
-            displayProjection: new OpenLayers.Projection("EPSG:4326"),
-			zoomMethod: null,
-           	units: 'm' // изучитьт
-		};
-		
-		OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
-		OpenLayers.DOTS_PER_INCH = 25.4 / 0.28;
-				
-		var map = new OpenLayers.Map('map', options);
-                			
-		OpenLayers.Lang.setCode('ru');
-		//-------------подключаем первую подложку           
-		osm_l = new OpenLayers.Layer.OSM('Карта'); osm_l.transitionEffect = 'resize';
-		markers = new OpenLayers.Layer.Markers( "Markers" ); //----------пошукові маркери
-		map.addLayers([osm_l, markers]); markers.displayInLayerSwitcher = false;
-		
-		var p = new OpenLayers.Geometry.Point(37.87, 48.16);
-			p.transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
-			map.moveTo( new OpenLayers.LonLat(p.x, p.y), 8); 
-						
-			Knavig = new OpenLayers.Control.Navigation();
-			mashtL = new OpenLayers.Control.ScaleLine({geodesic: true, bottomInUnits: 'km', topInUnits: 'm' });
-			olS = new OpenLayers.Control.LayerSwitcher(); olS.fl = 0;
-			mPosit = new OpenLayers.Control.MousePosition();
-			map.addControls([Knavig, mashtL, olS, mPosit]); 	
-		
-	//$('#men_kont').menu('init');
-		
 			
-
-	map.events.on({"moveend": stateChange}); 
-	function stateChange(e) {
-		//	router.navigate("navigate/" + map.baseLayer.name + "/" + map.getZoom()+ '/' +  map.getCenter().lon + "/" + map.getCenter().lat);
-		var konvert = encodeURI(map.baseLayer.name);
-		location.hash = "/navigate/" + konvert.replace(/%/g, ".")  + "/" + map.getZoom()+ '/' +  map.getCenter().lon + "/" + map.getCenter().lat;
+		});
+	
+	angular.module('App').
+		config(function($stateProvider, $urlRouterProvider, $olMapProvider, $injector) {
+			
+			
+		$stateProvider
 		
-	}	
-        
+		.state('navigate.search', {
+				url:'/serch/:param',
+				views: {
+					'search@' : {
+						template:'<h5>{{init}}</h5>',
+						controller: function($scope, res, $olMap) {
+							var map = $olMap.map;
+							var markers = $olMap.markers;
+							$scope.init =  res[0].geometry.location.lng();
+							
+							var proj = new OpenLayers.Projection("EPSG:4326");
+							var point = new OpenLayers.LonLat(res[0].geometry.location.lng(), res[0].geometry.location.lat());
+							var	LonLat = point.transform(proj, map.getProjectionObject())
+							map.setCenter(LonLat, 15);
+							setMarker(markers, LonLat);
+							
+							function setMarker(MarkL, LonLat){
+							MarkL.clearMarkers();
+							var size = new OpenLayers.Size(21,25);
+							var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+							var icon = new OpenLayers.Icon('images/menu/marker.png', size,offset);
+							var marker = new OpenLayers.Marker(LonLat, icon);
+							marker.events.register('mousedown', marker, function(evt) {
+								alert(address);
+								OpenLayers.Event.stop(evt);
+							});
+							MarkL.addMarker(marker);
+						}
+						
+										
+									
+							
+						}
+					},
+				},
+				resolve: {
+					res: function($stateParams, $q) {
+						var address=$stateParams.param;
+						var geoCoder = new window.google.maps.Geocoder(address);
+						var request = { address:$stateParams.param };
+						
+						var deferred = $q.defer();
+						
+											//var map = document.getElementById("map");
+						geoCoder.geocode(request, function(result, status){
+							if (google.maps.GeocoderStatus.OK) {
+									if(!result[0]){
+										deferred.resolve("За данним запитом відомості відсутні");
+									}	 else {
+									
+										deferred.resolve(result);
+										
+									}
+										
+							} else {
+								deferred.reject("Google API Geokoder Filed ");
+							}	
+																		
+						});				
+						
+						
+						
+						
+						return deferred.promise;
+						
+						
+						
+					}
+				}
+		})
+		.state('navigate.signin', {
+				url:'/signin',
+				views: {
+					'centrV@' : {
+						templateUrl:'views/signUp.html',
+						controller:'layerswitcher'
+					},
+				},
+			})
+			.state('navigate', {
+				url:'/navigate/:layer/:zoom/:lon/:lat',
+				onEnter: function($stateParams){
+					var layer = $stateParams.layer;
+					layer = decodeURI(layer.replace(/\./g, "%"));
+					$olMapProvider.map.moveTo( new OpenLayers.LonLat($stateParams.lon, $stateParams.lat), $stateParams.zoom);
+					var l = $olMapProvider.map.getLayersByName(layer)[0];
+					$olMapProvider.map.setBaseLayer(l);
+				}
+			})
+			.state('navigate.layer', {
+				url:'/layer',
+				views: {
+					'ls@' : {
+						templateUrl:'views/layerswitcher.html',
+						controller:'layerswitcher'
+					},
+				},
+				onEnter: function($stateParams){
+					$stateParams.state="layer";
+				}
+			})
+			.state('navigate.navig', {
+				url:'/navig',
+				onEnter: function($stateParams){
+					$stateParams.state="navig";
+				}
+			})
+			.state('navigate.zp', {
+				url:'/zp',
+				onEnter: function(){
+					
+				}
+				
+			})
+			.state('navigate.zm', {
+				url:'/zm',
+				onEnter: function(){
+					
+				}
+				
+			})
+			.state('navigate.drawpoint', {
+				url:'/drawpoint/:id',
+				views: { //----------потом можна перенести на линию сделаю креатив на линии
+					'menuCont@' : {
+						templateUrl:'views/Point.html',
+						controller:'drawpoint'
+					}
+					
+				},
+				onEnter: function($stateParams){
+						$stateParams.state="drawpoint";
+						console.log("dddd");
+					}
+				
+			})
+			.state('navigate.drawline', {
+				url:'/drawline',
+				onEnter: function(){
+					
+				}
+				
+			})
+			.state('navigate.drag', {
+				url:'/drag',
+				onEnter: function($stateParams, tematikLayerInit){
+					tematikLayerInit.allControlDeactivate();
+					tematikLayerInit.getSelect('osn').activate();
+					tematikLayerInit.getSelect('dop').activate();
+					 $stateParams.state="drag";
+					
+				}
+				
+			})
+			.state('navigate.rotatter', {
+				url:'/rotatter',
+				onEnter: function($stateParams, tematikLayerInit){
+					$stateParams.state="rottater";
+					tematikLayerInit.allControlDeactivate();
+					tematikLayerInit.getLayer('p1').control.rotate.activate();
+				}
+				
+			})
+			.state('navigate.attrib', {
+				url:'/attrib',
+				onEnter: function($stateParams){
+					 $stateParams.state="attrib";
+				}
+			})
+			.state('navigate.deleter', {
+				url:'/deleter',
+				onEnter: function($stateParams){
+					 $stateParams.state="deleter";
+				}
+			})
+			.state('navigate.inform', {
+				url:'/inform',
+				onEnter: function(){
+					
+				}
+			})
+			.state('navigate.messure', {
+				url:'/messure',
+				onEnter: function($localStorage){
+						$localStorage.$reset();
+				}
+			});
+				
+	});
+	
+	
+	
+
+		

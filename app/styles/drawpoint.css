@@ -1,0 +1,101 @@
+	.sliderCont  {
+		
+		text-align: center;
+	}
+	
+	
+	.menurozdil  {
+		padding:0;
+		margin:0;
+		margin-bottom:2px;
+		opacity:1;
+		color: white;	
+			 
+	}
+	.menurozdil:hover {
+		cursor:pointer;
+		
+		
+	}
+	.menurozdil  .dd {
+		display:block;
+		margin:0;
+		padding:0;
+		height:0;
+		height:25px;
+		background-color: rgba(138, 176, 204, 0.9); /* Old browsers */
+		border-radius: 0 14px 14px 0; /* закругление углов для всех, кто понимает */
+		
+	}
+	.ddactive {
+			border-radius: 0 14px 0 0 !important;
+			background-color: green !important;
+	}
+	.submenu {
+		padding: 15px;
+		padding-top:2px;
+		padding-bottom:2px;
+		text-align: justify;
+		height: auto;
+		visibility:hidden;
+		opacity:0;
+		max-height: 0;
+		background-color: #E7E7E7;
+		overflow:hidden;
+				
+	}
+	.subactiv {
+		height: auto;
+		max-height: 400px;
+		visibility:visible;
+		opacity:0.95;
+		
+	}
+	
+	.menurozdil  a {
+		color:white;
+		display: inline-block;
+	}
+	.menurozdil .submenu  a {
+		margin: 1px;
+		border: solid 1px #999;
+		 border-radius: 4px 4px 4px 4px; /* закругление углов для всех, кто понимает */
+		cursor: pointer;
+		display: inline-block;
+		
+		transition: all 0.2s ease-in-out;
+	}
+	.menurozdil .submenu  img {
+		width:30px; 
+		height:30px;
+	}
+	 
+	.menurozdil .submenu a:hover {
+		 background-color: #52b6ec;
+	/*	background-color: #E7E7E7; */
+		transform: scale(1.05); 
+	}
+	
+	.sliderCont.ng-enter, 
+	.sliderCont.ng-enter-active
+	{
+		transition: all 1s;
+	}
+	
+	
+	.sliderCont.ng-enter  .subactiv{
+		opacity: 0;
+		max-height: 0;
+	}
+	
+	.sliderCont.ng-enter-active .subactiv {
+		transition: all 0.7s;
+		opacity: 1;
+		max-height: 400px;
+	}
+	
+	
+	
+	
+	
+	

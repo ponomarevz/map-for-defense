@@ -15,9 +15,10 @@
     <link rel="stylesheet" href="app/styles/main.css">
 	<link rel="stylesheet" href="styles/base.css"/>
 	<link rel="stylesheet" href="styles/panel-instr.css"/>
+	<link rel="stylesheet" href="styles/drawpoint.css"/>
     <!-- endbuild -->
   </head>
-  <body ng-app="App" ng-controller = "NavigationCtrl">
+  <body ng-app="App" ng-controller = "main">
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -36,26 +37,26 @@
 
 	<div class="navbar-collapse collapse">
 				 
-		<div class="col-sm-3 col-md-4">
+		<div class="nav navbar-nav navbar-left">
 			<form class="navbar-form">
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Пошук" name="q">
+					<input type="text" class="form-control" placeholder="Пошук" name="q" ng-model='zaput'>
 					<div class="input-group-btn">
-						<button class="btn btn-default" type="button" onclick="location.hash = '#searh'"><i class="glyphicon glyphicon-search"></i></button>
+						
+						<button class="btn btn-default" ui-sref="navigate.search({param:zaput})"><i class="glyphicon glyphicon-search"></i></button>
 					</div>
 				</div>
 			</form>
 		</div>
 		
 		<ul class="nav navbar-nav navbar-left">
-						
-                        <li><a href="#projekt_inf">О проекте</a></li>
-                        <li><a href="#contact">Контакт</a></li>
-						<li><a href="#projekt_help">Допомога</a></li>
+			<li><a>О проекте</a></li>
+            <li><a href="#contact">Контакт</a></li>
+			<li><a href="#projekt_help">Допомога</a></li>
 						
         </ul>
 		 
-        <ul class="nav navbar-nav navbar-static-top navbar-right inVisible">
+        <ul class="nav navbar-nav navbar-static-top navbar-right" style="margin-right:20px;" ng-show="isAuthenticated()">
 		   <li class="dropdown">
              <a class="dropdown-toggle" data-toggle="dropdown" href="#">User foto<img src="" class = "kn_instr"/>
               <span class="caret"></span></a>
@@ -64,32 +65,28 @@
                   <li><a href="#user_konf">Налаштування коритувача</a></li>
 				  <li><a href="#">Вихід</a></li> 
 				</ul>
-        </li>
+			</li>
 		</ul>
 		
-		<form class="navbar-form navbar-right">
-		    <a href="#reestr">Приєднуйтеь</a>
-            <button class="btn btn-default" type="button" onclick="location.hash = '#signUp'"><i class="glyphicon glyphicon-user"></i></button>
-        </form>
+			<form class="navbar-form navbar-right" ng-hide="isAuthenticated()">
+				<a href="#reestr">Приєднуйтеь</a>
+				<button class="btn btn-default" ui-sref="navigate.signin"><i class="glyphicon glyphicon-user"></i></button>
+			</form>
 		
 				
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
 
-    <div id="map">
-		<div id="men_kont" class="view" ng-include="'views/panel-instr.html'" ng-controller = "panel-instr"></div>
-		<div class="view" ng-include="selectedRoute.templateUrl"></div>
+    <div id = "map" ng-controller="olMapController">
+		<div class="col-md-12 col-xs-12" ui-view="centrV" style="height:10px; backgroun-color:red; position:absolute; z-index:999;"></div>
+		<div class="col-md-3 col-md-offset-9 col-sm-4 col-sm-offset-8 col-xs-8 col-xs-offset-4" ui-view="ls" style="position:absolute; z-index:999;"></div>
+		<div class="col-md-12 view" ng-include="'views/panel-instr.html'" ng-controller = 'panel-instr'></div>
+		<!--<div class="col-md-4 col-sm-4 col-xs-8" ui-view="search" style="margin-top:330px; margin-left:30px; height:100px; background-color: red; position:absolute; z-index:999;"></div> -->
 	</div>
-
-    <div class="footer">
-      <div class="container">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-      </div>
-    </div>
-	
 	
 
+    
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -104,12 +101,29 @@
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
+		
+		<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+		<script src="bower_components/angular-animate/angular-animate.js"></script>
 		<script src="bower_components/ol/OpenLayers-min.js"></script>
+		<script src="bower_components/ol/jsts/javascript.util.min.js"></script>
+		<script src="bower_components/ol/jsts/jsts.js"></script>
+		<script src="bower_components/ol/lib/Direction.js"></script>
+		<script src="bower_components/ol/lib/Arrow.js"></script>
+		<script src="bower_components/ol/lib/fRotate.js"></script>
+		
+		
+		
 		<script src="scripts/app.js"></script>
-		<script src="scripts/routpar.js"></script>
-        <script src="scripts/formap/Here.js"></script>
-		<script src="scripts/formap/baseLayerInit.js"></script>
+		<script src="scripts/formap/Here.js"></script>
+		<script src="scripts/service/olMap.js"></script>
+		<script src="scripts/service/instrServ.js"></script>
+		<script src="scripts/service/baseLayerInit.js"></script>
+		<script src="scripts/service/tematikLayerInit.js"></script>
+		<script src="scripts/controllers/olMapController.js"></script>
 		<script src="scripts/controllers/panel-instr.js"></script>
+		<script src="scripts/controllers/layerswitcher.js"></script>
+		<script src="scripts/controllers/drawpoint.js"></script>
+		<script src="scripts/directivs/drawpoint.js"></script>
         <!-- endbuild -->
 		
 		

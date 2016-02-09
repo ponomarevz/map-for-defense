@@ -1,0 +1,11 @@
+<div class = "menurozdil" ng-repeat = "rozdil in model.contents_rozdil">
+		<a class="dd" ng-class="{'ddactive': isSelItem(rozdil.id_rozdil)}" ui-sref="navigate.drawpoint({id: rozdil.id_rozdil})" ui-sref-opts="{reload: true}">
+			{{rozdil.rozdil_title}}
+		</a>
+	
+		<div class = "submenu" ng-class="{'subactiv': isSelItem(rozdil.id_rozdil)}" ng-animate="{enter: 'animate-enter'}">
+			<a ng-repeat = "item in obj[rozdil.id_rozdil]">
+				<div simple-bind src-title = "item.obj_title" src-value="item.obj_src" src-type="item.obj_type"></div>
+			</a>
+		</div>
+	</div>

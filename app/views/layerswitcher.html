@@ -1,0 +1,24 @@
+	<div style="margin-top:10px; padding:0" class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">Слои</div>
+            </div>
+            <div class="panel-body" >
+                <div class="container-fluid">
+					<h5 style="margin:0; margin-bottom:10px;">Базові Шари</h5>
+					<ul class="row" style="padding:0 10px 0; list-style:none; margin-top:-5px;">
+						<li ng-repeat="item in baselayers" ng-class="getClass(item.visibility)">
+							<a style="cursor:pointer; margin-bottom:-15px; font-size:13px;" ng-click="changeBaseLayer(item.name)">
+								{{item.name}}
+							</a>
+						</li>
+					</ul>
+					<h5>Тематичні Шари</h5>
+					<div class="row" ng-repeat="item in temlayers">
+						<span>{{item.name}}</span>
+					</div>
+				</div>
+            </div>
+		</div>
+    </div>
+   
