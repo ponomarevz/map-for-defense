@@ -161,7 +161,10 @@
 			})
 			.state('navigate.drag', {
 				url:'/drag',
-				onEnter: function($stateParams){
+				onEnter: function($stateParams, tematikLayerInit){
+					tematikLayerInit.allControlDeactivate();
+					tematikLayerInit.getSelect('osn').activate();
+					tematikLayerInit.getSelect('dop').activate();
 					 $stateParams.state="drag";
 					
 				}
@@ -171,7 +174,8 @@
 				url:'/rotatter',
 				onEnter: function($stateParams, tematikLayerInit){
 					$stateParams.state="rottater";
-					tematikLayerInit.getLayer('p1').control.rotate.activate();;
+					tematikLayerInit.allControlDeactivate();
+					tematikLayerInit.getLayer('p1').control.rotate.activate();
 				}
 				
 			})

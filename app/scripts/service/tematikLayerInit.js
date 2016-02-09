@@ -590,14 +590,10 @@
 				$('#information').hide(); 
 			}
 		}
-		function control_deactivate() {
-			tLayer.control.edit.deactivate(); 
-			tLayer.control.rotate.deactivate();
-			tLayer.control.draw.deactivate();
-		
-		}
-		
+				
 		//-----------возвращаем Layer для доступа из сервиса
+				map.addLayer(tLayer.layer);
+				
 				layer[id] = tLayer;
 				return tLayer;
 			
@@ -620,8 +616,9 @@
 	this.selectInit = function() {
 			var layerMas = [];
 			for (i in layer) {
-				layerMas.push(layer[i]);
-			}
+				layerMas.push(layer[i].layer);
+			};
+			
 			var Kselect1 = new OpenLayers.Control.SelectFeature( layerMas, { 
 						hover: true, 
 						callbacks:{
@@ -649,12 +646,28 @@
 			var Kselect = new OpenLayers.Control.SelectFeature(layerMas);  
 			selectContr['osn'] = Kselect1;
 			selectContr['dop'] = Kselect;
+			
 			map.addControls([Kselect1, Kselect]);
 			
 	};
-	
+	/*---------------возвращает контрол  тематического слоя--------
+								--- getSelect ---
+	-------------------------------------------------------------------*/
 	this.getSelect = function(id) {
 		return selectContr[id];
+	}
+	/* ---------------метод для декативации всех контролов--------------
+							--- allControlDeactivate ---
+		деактивируем селекты, драги, вращатели, нанесение
+	-------------------------------------------------------------------*/
+	this.allControlDeactivate = function() {
+		selectContr['osn'].deactivate();
+		selectContr['dop'].deactivate();
+		for (i in layer) {
+			layer[i].control.edit.deactivate(); 
+			layer[i].control.rotate.deactivate();
+			layer[i].control.draw.deactivate();
+		};
 	}
 	
 });
